@@ -1,0 +1,28 @@
+IMLIB	= /usr/local/image/lib/sgi
+LLIBS	= -lioutil -lutil
+
+it: frparse frcheck pgrep
+OBJ = frparse.o frtags.o frscan.o frinit.o frstop.o frfoot.o frio.o
+
+frparse.o: Makefile frparse.h frio.h frproto.h frstop.h frparse.c
+frinit.o: Makefile frparse.h frproto.h frinit.c
+frscan.o: Makefile frio.h frstop.h frscan.c
+frfoot.o: Makefile frparse.h frproto.h frstop.h frfoot.c
+frtags.o: Makefile frparse.h frio.h frproto.h frstop.h frtags.c
+frstop.o: Makefile frstop.h frstop.c
+frio.o: Makefile frio.c
+
+frparse: $(OBJ)
+	cc $(OBJ) -L$(IMLIB) $(LLIBS) -o $@
+
+
+frcheck: frcheck.o
+	cc frcheck.o -L$(IMLIB) $(LLIBS) -o $@
+
+pgrep: pgrep.o
+	cc pgrep.o -L$(IMLIB) $(LLIBS) -o $@
+
+.c.o:
+#	cc -c -O2 -mips2 $<
+	cc -c -g $<
+
