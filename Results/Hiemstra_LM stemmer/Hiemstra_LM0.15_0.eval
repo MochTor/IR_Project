@@ -1,0 +1,37 @@
+____________________________________
+Number of queries  = 50
+Retrieved          = 47396
+Relevant           = 4674
+Relevant retrieved = 2199
+____________________________________
+Average Precision: 0.1733
+R Precision      : 0.2189
+____________________________________
+Precision at   1 : 0.4800
+Precision at   2 : 0.4700
+Precision at   3 : 0.4400
+Precision at   4 : 0.4250
+Precision at   5 : 0.3920
+Precision at   10 : 0.3560
+Precision at   15 : 0.3360
+Precision at   20 : 0.3110
+Precision at   30 : 0.2727
+Precision at   50 : 0.2280
+Precision at   100 : 0.1742
+Precision at   200 : 0.1268
+Precision at   500 : 0.0731
+Precision at   1000 : 0.0440
+____________________________________
+Precision at   0%: 0.6434
+Precision at   10%: 0.3747
+Precision at   20%: 0.3033
+Precision at   30%: 0.2583
+Precision at   40%: 0.1899
+Precision at   50%: 0.1412
+Precision at   60%: 0.0908
+Precision at   70%: 0.0657
+Precision at   80%: 0.0434
+Precision at   90%: 0.0278
+Precision at   100%: 0.0059
+____________________________________
+Average Precision: 0.1733
