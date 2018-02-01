@@ -1,0 +1,462 @@
+%% downsamplePool
+% 
+% Downsamples a pool according to different strategies.
+%
+%% Synopsis
+%
+% [downsampledPool] = downsamplePool(pool, runSet, varargin)
+%  
+%
+% *Parameters*
+%
+% * *|pool|* - the pool to be used to assess the run(s). It is a table in the
+% same format returned by <../io/importPoolFromFileTRECFormat.html 
+% importPoolFromFileTRECFormat>;
+% * *|runSet|* - the run(s) to be assessed. It is a table in the same format
+% returned by <../io/importRunFromFileTRECFormat.html 
+% importRunFromFileTRECFormat> or by <../io/importRunsFromDirectoryTRECFormat.html 
+% importRunsFromDirectoryTRECFormat>;
+%
+% *Name-Value Pair Arguments*
+%
+% Specify comma-separated pairs of |Name|, |Value| arguments. |Name| is the 
+% argument name and |Value| is the corresponding value. |Name| must appear 
+% inside single quotes (' '). You can specify several name and value pair 
+% arguments in any order as |Name1, Value1, ..., NameN, ValueN|.
+%
+% * *|ShortNameSuffix|* (optional) - a string providing a suffix which will
+% be concatenated to the short name of the measure. It can contain only
+% letters, numbers and the underscore. The default is empty.
+% * *|NotAssessed|* (optional) - a string indicating how not assessed
+% documents, i.e. those in the run but not in the pool, have to be
+% processed: |NotRevelant|, the minimum of the relevance degrees of the 
+% pool is used as |NotRelevant|; |Condensed|, the not assessed documents 
+% are  removed from the run. If not specified, the default value  is 
+% |NotRelevant| to mimic the behaviour of trec_eval.
+% * *|MapToBinaryRelevance|* (optional) - a string specifying how relevance 
+% degrees have to be mapped to binary relevance. The following values can 
+% be used: _|Hard|_ considers only the maximum degree of relevance in the 
+% pool as |Relevant| and any degree below it as |NotRelevant|; _|Lenient|_ 
+% considers any degree of relevance in the pool above the minimum one as 
+% |Relevant| and only the minimum one is considered as |NotRelevant|; 
+% _|RelevanceDegree|_ considers the relevance degrees in the pool stricly 
+% above the specified one as |Relevant| and all those less than or equal to 
+% it as |NotRelevant|. In this latter case, if |RelevanceDegree| does not 
+% correspond to any of the relevance degrees in the pool, an error is 
+% raised. If not specified, |Lenient| will be used to map to binary
+% relevance.
+% * *|Verbose|* (optional) - a boolean specifying whether additional
+% information has to be displayed or not. If not specified, then |false| is 
+% used as default.
+%
+% *Returns*
+%
+% * |measureRunSet|  - a table containing a row for each topic and a column 
+% for each run named |runName|. Each cell of the table contains a scalar
+% representing the average precision. The |UserData| property of  the table 
+% contains a struct  with the  following fields: _|identifier|_ is the 
+% identifier of the run; _|name|_  is the name of the computed measure, i.e.
+% |averagePrecision|; _|shortName|_ is a short name of the computed 
+% measure, i.e. |AP|; _|pool|_ is the identifier of the pool with respect 
+% to which the measure has been computed. Note that when the condensed
+% measure is requested, as in (Sakai, SIGIR 2007), then the name and short
+% name are, respectively, |inducedAveragePrecision| and |indAP|, as in
+% (Yilmaz and Aslam, CIKM 2006).
+% * *|poolStats|* - see description in <assess.html assess>.
+% * *|runSetStats|* - see description in <assess.html assess>.
+% * *|inputParams|* - a struct summarizing the input parameters passed.
+
+%% Example of use
+%  
+%   measuredRunSet = averagePrecision(pool, runSet);
+%
+% It computes the precision at standard document cut-off values for a run
+% set. Suppose the run set contains the following runs:
+% 
+% * |APL985LC.txt|
+% * |AntHoc01.txt|
+% * |acsys7al.txt|
+%
+% In this example each run has two topics, |351| and |352|. It returns the 
+% following table.
+%
+%              APL985LC          AntHoc01          acsys7al   
+%           ______________    ______________    ______________
+%
+%    351       0.1120            0.2899            0.3842
+%    352       0.5527            0.0212            0.3758
+%
+% Column names are run identifiers, row names are topic identifiers; cells
+% contain a row vector with the value of the average precision.
+% 
+%   APL985LC_351 = measuredRunSet{'351','APL985LC'}
+%
+%   ans =
+%
+%    0.1120
+%
+% It returns the average precision for topic 351 of run APL985LC.
+%
+%% References
+% 
+% Please refer to:
+%
+% * Buckley, C. and Voorhees, E. M. (2004). Retrieval Evaluation with 
+% Incomplete Information. In Sanderson, M., Jävelin, K., Allan, J., and 
+% Bruza, P., editors, _Proc. 27th Annual International ACM SIGIR Conference 
+% on Research and Development in Information Retrieval (SIGIR 2004)_, pages 
+% 25-32. ACM Press, New York, USA.
+% * Yilmaz, E. and Aslam, J. A. (2006). Estimating Average Precision With 
+% Incomplete and Imperfect Judgments. In Yu, P. S., Tsotras, V., Fox, E. A.,
+% and Liu, C.-B., editors, _Proc. 15th International Conference on 
+% Information and Knowledge Management (CIKM 2006)_, pages 102-111. ACM 
+% Press, New York, USA.
+% * Yilmaz, E. and Aslam, J. A. (2008). Estimating average precision when 
+% judgments are incomplete. _Knowledge and Information Systems_, 
+% 16(2):173-211.
+
+%% Information
+% 
+% * *Author*: <mailto:ferro@dei.unipd.it Nicola Ferro>,
+% <mailto:silvello@dei.unipd.it Gianmaria Silvello>
+% * *Version*: 1.00
+% * *Since*: 1.00
+% * *Requirements*: Matlab 2013b or higher
+% * *Copyright:* (C) 2013-2014 <http://ims.dei.unipd.it/ Information 
+% Management Systems> (IMS) research group, <http://www.dei.unipd.it/ 
+% Department of Information Engineering> (DEI), <http://www.unipd.it/ 
+% University of Padua>, Italy
+% * *License:* <http://www.apache.org/licenses/LICENSE-2.0 Apache License, 
+% Version 2.0>
+
+%%
+%{
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+%}
+
+%%
+function [downsampledPool] = downsamplePool(pool, runSet, varargin)
+
+    % helper variables
+    persistent UNSAMPLED_UNJUDGED BV_R_MIN BV_NR_MIN;
+    
+    if isempty(UNSAMPLED_UNJUDGED)
+        
+        % New categorical value to be added to the pool to indicate not
+        % sampled documents or documents that have been pooled but
+        % unjudged. See Yilmaz and Aslam, CIKM 2006
+        UNSAMPLED_UNJUDGED = 'U_U';
+        
+        % Minimum number of relevant documents to be sampled. See Buckley
+        % and Voorhees, SIGIR 2004
+        BV_R_MIN = 1;
+        
+        % Minimum number of not relevant documents to be sampled. See 
+        % Buckley and Voorhees, SIGIR 2004
+        BV_NR_MIN = 10;
+    end;
+
+    
+    % check that we have the correct number of input arguments. 
+    narginchk(2, inf);
+    
+    % parse the variable inputs
+    pnames = {'Downsampling'        'SampleSize'                              'Iterations' 'Verbose'};
+    dflts =  {'StratifiedSampling'  [90 80 70 60 50 40 30 25 15 10 5 4 3 2 1] 1            false};
+    [downsampling, sampleSize, iterations, verbose, supplied] ...
+         = matlab.internal.table.parseArgs(pnames, dflts, varargin{:});
+    
+    if supplied.Downsampling
+        
+        % check that Downsampling is a non-empty string
+        validateattributes(downsampling, ...
+            {'char', 'cell'}, {'nonempty', 'vector'}, '', 'Downsampling');
+        
+        if iscell(downsampling)
+            % check that Downsampling is a cell array of strings with one element
+            assert(iscellstr(downsampling) && numel(downsampling) == 1, ...
+                'MATTERS:IllegalArgument', 'Expected Downsampling to be a cell array of strings containing just one string.');
+        end
+        
+        % remove useless white spaces, if any, and ensure it is a char row
+        downsampling = char(strtrim(downsampling));
+        downsampling = downsampling(:).';
+        
+        % check that Downsampling assumes a valid value
+        validatestring(downsampling, ...
+            {'StratifiedSampling', 'RandomSampling', 'PoolDepthSampling'}, ...
+            '', 'Downsampling');             
+    end;  
+    
+    if supplied.SampleSize        
+        switch lower(downsampling)
+            
+            case {'stratifiedsampling', 'randomsampling'}
+                % check that SampleSize is a nonempty scalar integer value
+                % greater than 0
+                validateattributes(sampleSize, {'numeric'}, ...
+                    {'nonempty', 'integer', 'vector', '>', 0}, '', 'SampleSize');
+                
+            case 'pooldepthsampling'
+                % check that SampleSize is a nonempty scalar value
+                % greater than 0
+                validateattributes(sampleSize, {'numeric'}, ...
+                    {'nonempty', 'vector', '>', 0}, '', 'SampleSize');
+        end;
+        
+        % ensure it is a row vector
+        sampleSize = sampleSize(:).';
+    end;
+    
+    if supplied.Iterations
+        
+        if strcmpi(downsampling, 'PoolDepthSampling')            
+            error('MATTERS:IllegalArgument', 'Repeated samplting (Iterations parameter) can be choosen only with stratified and random sampling but not with pool depth sampling.');
+        end;
+        
+        % check that Iteration is a nonempty scalar integer value
+        % greater than 0
+        validateattributes(iterations, {'numeric'}, ...
+            {'nonempty', 'scalar', 'integer', '>', 0}, '', 'Iterations');
+    end;
+          
+    if supplied.Verbose
+        % check that verbose is a non-empty scalar logical value
+        validateattributes(verbose, {'logical'}, {'nonempty','scalar'}, '', 'Verbose');
+    end;    
+                     
+    if verbose
+        fprintf('\n\n----------\n');
+        
+        fprintf('Downsampling pool pool %s with respect to run set %s with %s.\n\n', ...
+            pool.Properties.UserData.identifier, runSet.Properties.UserData.identifier, downsampling);
+    end;
+    
+    % determine the relevance degree in the pool corresponding to not 
+    % relevant documents
+    notRelevant = categories(pool{:, 1}{1, 1}.RelevanceDegree);
+
+    % If the lowest relevance degree in the pool is 
+    % UNSAMPLED_UNJUDGED, then the pool has been already downsampled and
+    % cannot do it twice
+    if strcmpi(notRelevant{1}, UNSAMPLED_UNJUDGED) 
+        error('MATTERS:IllegalState', 'Pool %s already contains unsampled or unjudged documents. Cannot downsample it twice.', ...
+                pool.Properties.UserData.identifier);
+    end;     
+    
+    % the not relevant document is the lowest degree
+    notRelevant = notRelevant{1};
+    
+    % the total number of samples of the pool to be produced
+    sampleNumber = length(sampleSize);
+        
+    % the topic currently under processing
+    ct = 1;
+            
+    % the samples of the pool at different iterations
+    downsampledPool = cell2table(cell(iterations, 1));
+    downsampledPool.Properties.UserData.identifier = [pool.Properties.UserData.identifier '_' downsampling '_' num2str(iterations) '_iterations'];       
+    downsampledPool.Properties.UserData.sampleSize = sampleSize;
+    downsampledPool.Properties.UserData.downsampling = downsampling;
+    downsampledPool.Properties.UserData.iterations = iterations;
+    downsampledPool.Properties.RowNames = strtrim(cellstr(num2str([1:iterations].', 'Iteration_%03d')));
+    downsampledPool.Properties.VariableNames = {'Samples'};
+
+              
+    % downsample the pool topic-by-topic as many times as many iterations
+    % are requested
+    for k = 1:iterations
+        
+        % compute the current downsampled pool
+        tmp = rowfun(@processTopic, pool, 'OutputVariableNames', ['Original'; strtrim(cellstr(num2str(sampleSize(:), 'SampleAt_%03d')))], 'OutputFormat', 'table', 'ExtractCellContents', true, 'SeparateInputs', false);
+        tmp.Properties.UserData.identifier = [pool.Properties.UserData.identifier '_' downsampling '_iteration_' num2str(k)];       
+        tmp.Properties.UserData.sampleSize = sampleSize;
+        tmp.Properties.UserData.downsampling = downsampling;
+        tmp.Properties.UserData.iteration = k;
+                    
+        % add the current downsampled pool to the set of downsampled pools
+        downsampledPool{k, :} = {tmp};
+    end;
+           
+    if verbose
+        fprintf('Downsampling of pool completed.\n');
+    end;
+    
+    %%
+    
+    % compute the measure for a given topic over all the runs
+    function [varargout] = processTopic(topic)
+        
+        if(verbose)
+            fprintf('Processing topic %s (%d out of %d)\n', pool.Properties.RowNames{ct}, ct, height(pool));            
+        end;
+        
+        % pre-allocate the outputs. There are as many output as the number
+        % of different samples of the pool requested
+        % (sampleSize/sampleNumber) plus 1 which is the original pool
+        varargout = cell(1, sampleNumber + 1);
+                
+        % the fist output is the original topic only in the first iteration
+        % then it is empty to avoid memory consumption
+        if k == 1
+            varargout{1} = topic;
+        else
+            varargout{1} = {NaN};
+        end;
+               
+        switch lower(downsampling)
+
+            % Description taken from Buckley and Voorhees, SIGIR 2004.
+            %
+            % For each topic in the 100% qrels, we create a list of the 
+            % relevant documents in a random order, and a separate list of 
+            % the judged nonrelevant documents in a random order. We then 
+            % create 16 additional qrels by taking 90, 80, 70, 60, 50, 40, 
+            % 30, 25, 20, 15, 10, 5, 4, 3, 2, and 1 percent of the 100% qrels. 
+            % For a target qrels that is P% as large as the 100% qrels, we 
+            % select X = P×R relevant documents and Y = PxN nonrelevant 
+            % documents for each topic where R is the number of relevant 
+            % documents in the 100% qrels and N is the number of judged 
+            % nonrelevant documents in the 100% qrels for that topic. We 
+            % use 1 as the minimum number of relevant documents and 10 as 
+            % the minimum number of judged nonrelevant documents per topic
+            % to include in a qrels. Thus if X or Y is less than the 
+            % corresponding minimum it is set to the minimum. We add the 
+            % first X relevant documents from the random list of relevant 
+            % documents and the first Y judged nonrelevant documents from 
+            % the random list of nonrelevant documents to the target qrels. 
+            % Since we take random subsets of a qrels that is assumed to be 
+            % fair, the reduced qrels are also unbiased with respect to 
+            % systems. Each of the smaller qrels is a subset of a larger 
+            % qrels since we always select from the top of the randomized 
+            % lists.
+            case 'stratifiedsampling'
+                                                               
+                % find the relevant and not relevant documents in the
+                % current topic
+                rel = topic{1, 1}.RelevanceDegree > notRelevant;
+                notRel = ~rel;
+
+                % determine the indices of the  relevant and not relevant
+                % documents
+                rel = find(rel);
+                notRel = find(notRel);
+                
+                % the indices of all the documents in the topic
+                all = 1:height(topic{1, 1});
+                all = all(:);
+                                
+                % the number of relevant and not relevant documents in the
+                % current topic
+                R = length(rel);
+                NR = length(notRel);
+                
+                % there are no relevant documents for the topic, nothing to
+                % sample. Return the topic itself
+                if(R < BV_R_MIN)
+                    varargout(2:end) = {topic};
+
+                    warning('MATTERS:IllegalState', 'Pool %s has no relevant documents for topic %s.', ...
+                    pool.Properties.UserData.identifier, pool.Properties.RowNames{ct});
+
+                    % increment the index of the current topic under processing
+                    ct = ct + 1; 
+                    
+                    return;
+                end;
+                
+                % there aren't enough not relevant documents for the topic, 
+                % nothing to sample. Return the topic itself
+                if(NR < BV_NR_MIN)
+                    varargout(2:end) = {topic};
+
+                    warning('MATTERS:IllegalState', 'Pool %s has not enough not relevant documents for topic %s (only %d instead of at least 10).', ...
+                    pool.Properties.UserData.identifier, pool.Properties.RowNames{ct}, NR);
+
+                    % increment the index of the current topic under processing
+                    ct = ct + 1; 
+                    
+                    return;
+                end;
+                
+                % randomly permute the relevant documents
+                rel = rel(randperm(R));
+                
+                % randomly permute the not relevant documents
+                notRel = notRel(randperm(NR));                               
+                               
+                % at each iteration, determine the relevant and not
+                % relevant documents that have to be sampled, their
+                % complement, i.e. those that will be left out by the
+                % sampling, and return a new pool topic with the same
+                % documents as the original one but marking the unsampled
+                % ones. They will be place in the output from the second
+                % element to the last one (the first is the original topic)
+                for s = 1:sampleNumber
+                                      
+                    % the indices of the relevant and not relevant
+                    % documents to be sampled
+                    sRel = rel(1:max(1, floor(sampleSize(s) * R / 100)));
+                    sNotRel = notRel(1:max(1, floor(sampleSize(s) * NR / 100)));
+                                       
+                    % determine the unsampled documents
+                    unsampled = setdiff(all, [sRel; sNotRel]);
+                                          
+                    % copy the topic and add the unsampled/unjudeged
+                    % relevantce degree
+                    sample = topic{1, 1};                    
+                    sample.RelevanceDegree = addcats(sample.RelevanceDegree, ...
+                        UNSAMPLED_UNJUDGED, 'Before', notRelevant);
+                    
+                    % mark the unsampled documents with the
+                    % unsampled/unjudged relevance degree
+                    sample.RelevanceDegree(unsampled) = UNSAMPLED_UNJUDGED;
+                                                         
+                    varargout{s+1} = {sample};
+                end;
+
+            % Description taken from Yilmaz and Aslam, CIKM 2006.
+            %
+            % We form incomplete judgment sets by randomly sampling from 
+            % the entire depth-100 pool over all submitted runs. This is 
+            % done by selecting p% of the complete judgment set uniformly 
+            % at random for each topic, where p is in {1, 2, 3, 4, 5, 10, 
+            % 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100}. Note that
+            % especially for small sampling percentages, the random sample 
+            % may not contain any relevant documents. In this case, we 
+            % remove the entire random sample and pick another p% random 
+            % sample until a random sample with at least one relevant 
+            % document is obtained.
+            case 'randomsampling'
+
+            case 'pooldepthsampling'
+
+        end;
+        
+              
+        % increment the index of the current topic under processing
+        ct = ct + 1;    
+        
+         if(verbose)
+            fprintf('\n');
+        end;
+        
+        %% 
+        
+      
+    end
+    
+end
+
+
+

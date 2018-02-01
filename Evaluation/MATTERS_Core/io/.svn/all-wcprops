@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/repos/matters/!svn/ver/244/trunk/src/matlab/core/io
+END
+calculateAnSaveRunSetStatistics.m
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/repos/matters/!svn/ver/186/trunk/src/matlab/core/io/calculateAnSaveRunSetStatistics.m
+END
+importAndSaveCollectionFromDirectoryTRECFormat.m
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/repos/matters/!svn/ver/186/trunk/src/matlab/core/io/importAndSaveCollectionFromDirectoryTRECFormat.m
+END
+importRunFromFileTRECFormat.m
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/matters/!svn/ver/163/trunk/src/matlab/core/io/importRunFromFileTRECFormat.m
+END
+calculateAndSaveRunSetStatistics.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/repos/matters/!svn/ver/244/trunk/src/matlab/core/io/calculateAndSaveRunSetStatistics.m
+END
+calculateRunStatistics.m
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/repos/matters/!svn/ver/174/trunk/src/matlab/core/io/calculateRunStatistics.m
+END
+importPoolFromFileTRECFormat.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/repos/matters/!svn/ver/113/trunk/src/matlab/core/io/importPoolFromFileTRECFormat.m
+END
+importRunsFromDirectoryTRECFormat.m
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/repos/matters/!svn/ver/244/trunk/src/matlab/core/io/importRunsFromDirectoryTRECFormat.m
+END

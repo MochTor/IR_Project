@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/repos/matters/!svn/ver/256/trunk/src/matlab/core/analysis
+END
+computeSelfKendallAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/repos/matters/!svn/ver/168/trunk/src/matlab/core/analysis/computeSelfKendallAtPoolSamples.m
+END
+apCorr.m
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/repos/matters/!svn/ver/252/trunk/src/matlab/core/analysis/apCorr.m
+END
+discriminativePower.m
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/repos/matters/!svn/ver/177/trunk/src/matlab/core/analysis/discriminativePower.m
+END
+computeDiscriminativePowerAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/repos/matters/!svn/ver/200/trunk/src/matlab/core/analysis/computeDiscriminativePowerAtPoolSamples.m
+END
+kdEstimation.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/matters/!svn/ver/256/trunk/src/matlab/core/analysis/kdEstimation.m
+END
+descriptiveStatistics.m
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/matters/!svn/ver/136/trunk/src/matlab/core/analysis/descriptiveStatistics.m
+END
+standardization.m
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/matters/!svn/ver/244/trunk/src/matlab/core/analysis/standardization.m
+END
+computeGlobalAveragePerformancesAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/matters/!svn/ver/168/trunk/src/matlab/core/analysis/computeGlobalAveragePerformancesAtPoolSamples.m
+END
+apCorrelation.m
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/matters/!svn/ver/234/trunk/src/matlab/core/analysis/apCorrelation.m
+END
+klDivergence.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/matters/!svn/ver/256/trunk/src/matlab/core/analysis/klDivergence.m
+END
+downsamplePool.m
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/matters/!svn/ver/194/trunk/src/matlab/core/analysis/downsamplePool.m
+END
+rmseCoefficient.m
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/matters/!svn/ver/238/trunk/src/matlab/core/analysis/rmseCoefficient.m
+END
+rmseCoeff.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/matters/!svn/ver/240/trunk/src/matlab/core/analysis/rmseCoeff.m
+END
+kendall.m
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/repos/matters/!svn/ver/226/trunk/src/matlab/core/analysis/kendall.m
+END
+computeMeanRunPerformancesAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/repos/matters/!svn/ver/201/trunk/src/matlab/core/analysis/computeMeanRunPerformancesAtPoolSamples.m
+END
+computeKendallAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/repos/matters/!svn/ver/218/trunk/src/matlab/core/analysis/computeKendallAtPoolSamples.m
+END
+confidenceIntervalDelta.m
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/repos/matters/!svn/ver/232/trunk/src/matlab/core/analysis/confidenceIntervalDelta.m
+END

@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/repos/matters/!svn/ver/229/trunk/src/matlab/core/plot
+END
+plotDiscriminativePower.m
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/repos/matters/!svn/ver/204/trunk/src/matlab/core/plot/plotDiscriminativePower.m
+END
+plotSelfKendallAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/matters/!svn/ver/229/trunk/src/matlab/core/plot/plotSelfKendallAtPoolSamples.m
+END
+tight_subplot.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/matters/!svn/ver/202/trunk/src/matlab/core/plot/tight_subplot.m
+END
+plotDiscriminativePowerAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/repos/matters/!svn/ver/210/trunk/src/matlab/core/plot/plotDiscriminativePowerAtPoolSamples.m
+END
+plotMeanRunPerformancesAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/repos/matters/!svn/ver/205/trunk/src/matlab/core/plot/plotMeanRunPerformancesAtPoolSamples.m
+END
+plotKendallAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/repos/matters/!svn/ver/204/trunk/src/matlab/core/plot/plotKendallAtPoolSamples.m
+END
+plotGlobalAveragePerformancesAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/repos/matters/!svn/ver/205/trunk/src/matlab/core/plot/plotGlobalAveragePerformancesAtPoolSamples.m
+END

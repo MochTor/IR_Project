@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/repos/matters/!svn/ver/257/trunk/src/matlab/core/util
+END
+md5.m
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/repos/matters/!svn/ver/68/trunk/src/matlab/core/util/md5.m
+END
+uuid.m
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/repos/matters/!svn/ver/157/trunk/src/matlab/core/util/uuid.m
+END
+extractNameValuePairs.m
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/repos/matters/!svn/ver/139/trunk/src/matlab/core/util/extractNameValuePairs.m
+END
+tight_subplot.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/matters/!svn/ver/206/trunk/src/matlab/core/util/tight_subplot.m
+END
+sersave.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/repos/matters/!svn/ver/196/trunk/src/matlab/core/util/sersave.m
+END
+serload.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/repos/matters/!svn/ver/211/trunk/src/matlab/core/util/serload.m
+END
+hlp_serialize.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/matters/!svn/ver/224/trunk/src/matlab/core/util/hlp_serialize.m
+END
+rgb.m
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/repos/matters/!svn/ver/257/trunk/src/matlab/core/util/rgb.m
+END
+evalf.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/repos/matters/!svn/ver/250/trunk/src/matlab/core/util/evalf.m
+END
+elapsedToHourMinutesSeconds.m
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/repos/matters/!svn/ver/136/trunk/src/matlab/core/util/elapsedToHourMinutesSeconds.m
+END
+hlp_deserialize.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/repos/matters/!svn/ver/224/trunk/src/matlab/core/util/hlp_deserialize.m
+END

@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/repos/matters/!svn/ver/254/trunk/src/matlab/core/measure
+END
+averagePrecision.m
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/matters/!svn/ver/136/trunk/src/matlab/core/measure/averagePrecision.m
+END
+gradedRankBiasedPrecision.m
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/matters/!svn/ver/229/trunk/src/matlab/core/measure/gradedRankBiasedPrecision.m
+END
+precision.m
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/repos/matters/!svn/ver/237/trunk/src/matlab/core/measure/precision.m
+END
+gradedAveragePrecision.m
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/matters/!svn/ver/230/trunk/src/matlab/core/measure/gradedAveragePrecision.m
+END
+reciprocalRank.m
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/matters/!svn/ver/226/trunk/src/matlab/core/measure/reciprocalRank.m
+END
+assess.m
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/repos/matters/!svn/ver/246/trunk/src/matlab/core/measure/assess.m
+END
+recall.m
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/repos/matters/!svn/ver/245/trunk/src/matlab/core/measure/recall.m
+END
+computeMeasureAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/repos/matters/!svn/ver/195/trunk/src/matlab/core/measure/computeMeasureAtPoolSamples.m
+END
+discountedCumulatedGain.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/repos/matters/!svn/ver/218/trunk/src/matlab/core/measure/discountedCumulatedGain.m
+END
+cumulatedRelativePosition.m
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/matters/!svn/ver/209/trunk/src/matlab/core/measure/cumulatedRelativePosition.m
+END
+computeAndSaveMeasureAtPoolSamples.m
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/matters/!svn/ver/229/trunk/src/matlab/core/measure/computeAndSaveMeasureAtPoolSamples.m
+END
+twist.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/repos/matters/!svn/ver/254/trunk/src/matlab/core/measure/twist.m
+END
+markovPrecision.m
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/matters/!svn/ver/212/trunk/src/matlab/core/measure/markovPrecision.m
+END
+extendedGradedAveragePrecision.m
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/repos/matters/!svn/ver/245/trunk/src/matlab/core/measure/extendedGradedAveragePrecision.m
+END
+rankBiasedPrecision.m
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/matters/!svn/ver/226/trunk/src/matlab/core/measure/rankBiasedPrecision.m
+END
+expectedGradedAveragePrecision.m
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/repos/matters/!svn/ver/245/trunk/src/matlab/core/measure/expectedGradedAveragePrecision.m
+END
+expectedReciprocalRank.m
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/matters/!svn/ver/253/trunk/src/matlab/core/measure/expectedReciprocalRank.m
+END
+qMeasure.m
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/repos/matters/!svn/ver/173/trunk/src/matlab/core/measure/qMeasure.m
+END
+cumulatedGain.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/matters/!svn/ver/202/trunk/src/matlab/core/measure/cumulatedGain.m
+END
+binaryPreference.m
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/matters/!svn/ver/136/trunk/src/matlab/core/measure/binaryPreference.m
+END
