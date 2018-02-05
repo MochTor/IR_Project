@@ -14,9 +14,11 @@ fprintf('>>>>>>>>>> Measuring Average Precision <<<<<<<<<<<\n');
 
 
 %for i = 1 : 10
-   %currentRun = basicRunSet(:,1);
+   currentRun = basicRunSet(:,1);
    %currentRun.Properties.UserData.identifier = strcat('basicRun', num2str(i));
    %basicRunSet(:,i) = currentRun;
-   %currentRun = importRunFromFileTRECFormat()    
+   %currentRun = importRunFromFileTRECFormat()
+   
+    
 %end
-[assessedRunSet, poolStats, runSetStats, inputParams] = assess(pool, basicRunSet);
+[assessedRunSet, poolStats, runSetStats, inputParams] = assess(pool, currentRun);
