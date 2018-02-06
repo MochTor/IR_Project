@@ -7,18 +7,25 @@ fprintf('>>>>>>>>>> Loading basic runs data <<<<<<<<<<\n');
 load('/Users/Marco/Documents/GitHub/IR_Project/Evaluation/basicRunSetData.mat');
 
 %%%%%%%%%%% Calculating AP %%%%%%%%%%
-fprintf('>>>>>>>>>> Measuring Average Precision on basic runs<<<<<<<<<<<\n');
+fprintf('>>>>>>>>>> Measuring Average Precision on basic runs <<<<<<<<<<<\n');
 %[assessedBasicRunSet, poolStats, runSetStats, inputParams] = assess(pool, basicRunSet);
 [measuredAPBasicRunSet, poolStats, runSetStats, inputParams] = averagePrecision(pool, basicRunSet);
 save('/Users/Marco/Documents/GitHub/IR_Project/Evaluation/measuredAPBasicRunSetData.mat', 'poolStats', 'runSetStats', 'measuredAPBasicRunSet', 'inputParams');
 clear assess;
 
 %%%%%%%%%%% Calculating MAP %%%%%%%%%%
-fprintf('>>>>>>>>>> Measuring Mean Average Precision on basic runs<<<<<<<<<<<\n');
+fprintf('>>>>>>>>>> Measuring Mean Average Precision on basic runs <<<<<<<<<<<\n');
 MAPBasicRuns = struct();
 MAPBasicRuns = mean(measuredAPBasicRunSet{:, 1:end});
 MAPBasicRuns = array2table(MAPBasicRuns');
+MAPBasicRuns.Properties.RowNames = measuredAPBasicRunSet.Properties.VariableNames;
 save('/Users/Marco/Documents/GitHub/IR_Project/Evaluation/MAPBasicRunSetData.mat', 'MAPBasicRuns');
+
+%%%%%%%%%%% Calculating Discounted Cumulated Gain %%%%%%%%%%
+fprintf('>>>>>>>>>> Measuring DCG on basic runs <<<<<<<<<<<\n');
+measuredDCGBasicRunSet = discountedCumulatedGain(pool, basicRunSet);
+save('/Users/Marco/Documents/GitHub/IR_Project/Evaluation/measuredDCGBasicRunSetData.mat', 'measuredDCGBasicRunSet');
+clear assess;
 clear all;
 
 %%%%%%%%%%% Importing runs %%%%%%%%%%
@@ -36,7 +43,15 @@ fprintf('>>>>>>>>>> Measuring Mean Average Precision on norm and fused runs<<<<<
 MAPNFRuns = struct();
 MAPNFRuns = mean(measuredAPNFRunSet{:, 1:end});
 MAPNFRuns = array2table(MAPNFRuns');
+MAPNFRuns.Properties.RowNames = measuredAPNFRunSet.Properties.VariableNames;
+
 save('/Users/Marco/Documents/GitHub/IR_Project/Evaluation/MAPNFRunSetData.mat', 'MAPNFRuns');
 
-fprintf('>>>>>>>>>> DONE! <<<<<<<<<<<<<\n');
+%%%%%%%%%%% Calculating Discounted Cumulated Gain %%%%%%%%%%
+fprintf('>>>>>>>>>> Measuring DCG on norm and fused runs <<<<<<<<<<<\n');
+measuredDCGNFRunSet = discountedCumulatedGain(pool, NFRunSet);
+save('/Users/Marco/Documents/GitHub/IR_Project/Evaluation/measuredDCGNFRunSetData.mat', 'measuredDCGNFRunSet');
+clear assess;
 clear all;
+
+fprintf('>>>>>>>>>> DONE! <<<<<<<<<<<<<\n');
